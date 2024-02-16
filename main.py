@@ -66,7 +66,7 @@ sensor = dht.DHT22(machine.Pin(23))
 
 # Initialisiere PWM-Pin
 fan_pin = Pin(25)
-fan_pwm = PWM(fan_pin, freq=1000, duty_u16=512)
+fan_pwm = PWM(fan_pin, freq=25000, duty_u16=512)
 fan_pwm.duty_u16(500)
 
 # Init Statusled
