@@ -9,19 +9,18 @@ from machine import Pin, PWM
 
 from config import *
 from network_script import do_connect
+from update_time import update_time_ntp, lokalzeit
 
-
-#from update_time import update_time_ntp #funktioniert noch nicht
 
 def print_stuff():
     # Zeige alle interessanten Werte an      
-    print("Local time：%s" %str(time.localtime()))
-    print("Counter " + str(counter))
+    print("Local time：%s" %str(lokalzeit()))
+    print("Counter " + str(counter) + "°C")
     print("Temperature: " + str(temp))
-    print("Humidity: " + str(humidity))
-    print("DewPoint: " + str(dew_point_temp))
-    print("PWMduty: " + str(fan_pwm.duty_u16()))
-    print("PWM: " + str(pwmperc)+"%")
+    print("Humidity: " + str(humidity) + "%")
+    print("DewPoint: " + str(dew_point_temp) + "°C")
+    print("PWM duty: " + str(fan_pwm.duty_u16()))
+    print("PWM: " + str(pwm_perc) + "%")
     print("Speicherverbrauch:", gc.mem_alloc() / 1024, "KiB")
     print("StatusLED " + str(status.value()))
     print("Network connection " +str(wlan.isconnected()))
@@ -30,22 +29,22 @@ def print_stuff():
     
     return
 
-def toggle_esp32(PinOUT):
+def toggle_esp32(pin_out):
     
     #toggle pinout
-    if PinOUT.value() == 1:
-        PinOUT.off()
+    if pin_out.value() == 1:
+        pin_out.off()
     else:
-        PinOUT.on()
+        pin_out.on()
     
     
     return
 
 
-def dew_point(temp, humidity):
+def dew_point(dew_temp, dew_humidity):
     a = 17.27
     b = 237.7
-    alpha = ((a * temp) / (b + temp)) + log(humidity / 100.0)
+    alpha = ((a * dew_temp) / (b + dew_temp)) + log(dew_humidity / 100.0)
     return (b * alpha) / (a - alpha)
 
 
@@ -67,18 +66,37 @@ def duty_pwm (target):
        
     return int(y)
 
+def read_dht (pin):
+    # Lese DHT 22 Sensor an angegeben Pin aus
+    
+    sensor_read = dht.DHT22(machine.Pin(pin))
+        
+    try: 
+        sensor_read.measure()
+        temp_read = sensor_read.temperature()
+        humidity_read = sensor_read.humidity()
+        
+        # print("Temperature: " + str(pin) + " " + str(temp_read) + "°C")
+        # print("Humidity: " + str(pin) + " " + str(humidity_read) + "°C")    
+                                   
+    except OSError as e:
+            print("DHT Error")
+    
+    return temp_read, humidity_read
+
+      
+
+# Hier beginnt die Main Loop
+
 # Init Network variablen
 wlan = network.WLAN(network.STA_IF)
-
-# Init Feuchtigkeitssensor
-sensor = dht.DHT22(machine.Pin(23))
 
 # Initialisiere PWM-Pin
 fan_pin = Pin(25)
 fan_pwm = PWM(fan_pin, freq=25000, duty_u16=512)
 fan_pwm.duty_u16(500)
 
-# Init Statusled
+# Init Status Led
 status = Pin(14, Pin.OUT)
 status.on()
 
@@ -86,30 +104,31 @@ counter = 0
 
 do_connect()
 
-#update_time_ntp() #(funktioniert noch nicht)
+update_time_ntp()
 
 while True:
     time.sleep(1)
     
     toggle_esp32(status)
-    
+      
     try: 
-        sensor.measure()
-        temp = sensor.temperature()
-        humidity = sensor.humidity()
+        
+        temp, humidity = read_dht(23)
                    
         dew_point_temp = dew_point(temp, humidity)
-    
-    
+        
         # Regle Lüftergeschwindigkeit basierend auf Feuchtigkeitswert
                    
         fan_pwm.duty_u16(duty_pwm(humidity))
     
         #Berechne pwm als Prozentwert
-        pwmperc = 100*(fan_pwm.duty_u16()/(65356))
+        pwm_perc = 100 * (fan_pwm.duty_u16() / 65356)
           
     except OSError as e:
             print("DHT Error")
+            
+    if not wlan.isconnected():
+        do_connect()
     
     #Print
     print_stuff()
