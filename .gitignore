@@ -1,2 +1,4 @@
 
-config.py
+/secrets.py
+/old_code/
+/.idea/*

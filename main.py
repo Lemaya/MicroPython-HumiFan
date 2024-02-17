@@ -1,9 +1,17 @@
-import time, math, gc, dht, machine, network
-from machine import Pin, PWM
+import dht
+import gc
+import machine
+import network
+import time
 from math import log
+
+from machine import Pin, PWM
+
+from config import *
 from network_script import do_connect
+
+
 #from update_time import update_time_ntp #funktioniert noch nicht
-import umqtt
 
 def print_stuff():
     # Zeige alle interessanten Werte an      
@@ -40,12 +48,13 @@ def dew_point(temp, humidity):
     alpha = ((a * temp) / (b + temp)) + log(humidity / 100.0)
     return (b * alpha) / (a - alpha)
 
-#PWM Steuerungsgerade a = min, b = max
+
+
 def duty_pwm (target):
-    # Kann angepasst werden Min Humidity
-    a_pwm = 40.0
-    # Kann angepasst werden Max Humidity
-    b_pwm = 80.0
+    # PWM Steuerungsgerade a = min, b = max
+
+    a_pwm = hum_min
+    b_pwm = hum_max
     m = 65356/(b_pwm - a_pwm)
     n = (65356 * a_pwm)/(a_pwm - b_pwm)
     
@@ -58,10 +67,10 @@ def duty_pwm (target):
        
     return int(y)
 
-#Init Network variablen
+# Init Network variablen
 wlan = network.WLAN(network.STA_IF)
 
-#Init Feuchtigkeitssensor
+# Init Feuchtigkeitssensor
 sensor = dht.DHT22(machine.Pin(23))
 
 # Initialisiere PWM-Pin
