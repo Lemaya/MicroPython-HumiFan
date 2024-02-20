@@ -2,3 +2,6 @@
 /secrets.py
 /old_code/
 /.idea/*
+.micropico/*
+.micropico
+.vscode/*

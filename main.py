@@ -15,8 +15,8 @@ from update_time import update_time_ntp, lokalzeit
 def print_stuff():
     # Zeige alle interessanten Werte an      
     print("Local time：%s" %str(lokalzeit()))
-    print("Counter " + str(counter) + "°C")
-    print("Temperature: " + str(temp))
+    print("Counter " + str(counter))
+    print("Temperature: " + str(temp) + "°C")
     print("Humidity: " + str(humidity) + "%")
     print("DewPoint: " + str(dew_point_temp) + "°C")
     print("PWM duty: " + str(fan_pwm.duty_u16()))
@@ -66,10 +66,13 @@ def duty_pwm (target):
        
     return int(y)
 
-def read_dht (pin):
+def read_dht (pin,last_t,last_h):
     # Lese DHT 22 Sensor an angegeben Pin aus
     
     sensor_read = dht.DHT22(machine.Pin(pin))
+
+    temp_read = last_t
+    humidity_read = last_h
         
     try: 
         sensor_read.measure()
@@ -81,6 +84,7 @@ def read_dht (pin):
                                    
     except OSError as e:
             print("DHT Error")
+            
     
     return temp_read, humidity_read
 
@@ -101,6 +105,8 @@ status = Pin(14, Pin.OUT)
 status.on()
 
 counter = 0
+last_temp = 20
+last_hum = 60
 
 do_connect()
 
@@ -113,9 +119,12 @@ while True:
       
     try: 
         
-        temp, humidity = read_dht(23)
+        temp, humidity = read_dht(23, last_temp, last_hum)
+        last_temp = temp
+        last_hum = humidity
                    
         dew_point_temp = dew_point(temp, humidity)
+
         
         # Regle Lüftergeschwindigkeit basierend auf Feuchtigkeitswert
                    
@@ -124,9 +133,9 @@ while True:
         #Berechne pwm als Prozentwert
         pwm_perc = 100 * (fan_pwm.duty_u16() / 65356)
           
-    except OSError as e:
+    except Exception:
             print("DHT Error")
-            
+                        
     if not wlan.isconnected():
         do_connect()
     
