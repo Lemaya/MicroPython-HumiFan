@@ -14,3 +14,10 @@ hum_min = 50
 hum_max = 80
 
 TIMEZONE = 1
+
+# Pinout
+
+PWM_OUTPUT = 12
+
+STATUS_LED = 27
+

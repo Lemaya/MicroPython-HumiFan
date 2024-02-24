@@ -7,12 +7,12 @@ timezone = TIMEZONE
 def update_time_ntp():
     #print("Zeit in sec seit epoch " + str (time.time()))
     wlan = network.WLAN(network.STA_IF)
-    print("UTC time before synchronization：%s" %str(time.localtime()))
+    print("UTC time before synchronization：" + str(time.localtime()))
     if wlan.isconnected():
         ntptime.settime()
 
         #machine.RTC.datetime(*localzeit)
-        print("UTC after synchronization：%s" %str(time.localtime()))
+        print("UTC after synchronization：" + str(time.localtime()))
         #print("Zeit in sec seit epoch " + str (time.time()))
     else:
         print ("Zeitupdate nicht möglich, Keine WLAN Verbindung")

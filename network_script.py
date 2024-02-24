@@ -1,6 +1,7 @@
 import network
 import time
 from config import *
+from umqtt.robust2 import MQTTClient
 
 ssid = SSID
 key = KEY
@@ -19,6 +20,8 @@ def do_connect(timeout = 30000):
                 print("WLAN connection timeout")
             
     print('network config:', wlan.ifconfig())
+
+
     
 if __name__ == "__main__":
     do_connect()

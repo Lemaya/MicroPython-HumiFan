@@ -5,3 +5,5 @@
 .micropico/*
 .micropico
 .vscode/*
+build/*
+wokwi.toml

@@ -46,8 +46,8 @@ class Tachometer(object):
            the pin this channel is hooked up to.
         """
         if pulse_detected_led:
-            #pulse_detected_led.toggle() no toggle
-       #self.pulse_detected = True
+            pulse_detected_led.toggle() no toggle
+        self.pulse_detected = True
         self.pulse_timestamp = self.channel.capture() & 0x1fffffff
         if self.num_samples < Tachometer.NUM_SAMPLES:
             prev_timestamp = self.timestamp[0]
@@ -85,8 +85,8 @@ class Tachometer(object):
         if (timer_count - last_pulse) > 1000000:
             # No pulses in the past second.
             self.pulse_detected = False
-            #print("timer_count =",  timer_count, "last_pusle =",  last_pulse)
-            #self.dump()
+            print("timer_count =",  timer_count, "last_pusle =",  last_pulse)
+            self.dump()
             return 0
         machine.disable_irq()
         delta_time = self.delta_time

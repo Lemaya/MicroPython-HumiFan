@@ -12,7 +12,7 @@ SAMPLING_TIME = 1 # ( in seconds )
 # pin declaration
 
 #tachometerPin = Pin(22, Pin.IN, Pin.PULL_DOWN)
-tachometerPin = Pin(22, Pin.IN)
+tachometerPin = Pin(35, Pin.IN)
 
 # interrupt handler function
 def tachometer(pin):# pin is default positional argument

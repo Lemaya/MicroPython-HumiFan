@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<netlist design="D:\Documents\16_Programmieren\github\MicroPython HumiFan\MicroPython-HumiFan\electrical\schematic.dsn">
+	<parts>
+		<part ref="R1" name="R">
+			<attribute name="Package"/>
+			<attribute name="Value">..</attribute>
+			<attribute name="Tol.">..</attribute>
+			<attribute name="P_Max">..</attribute>
+			<attribute name="Manufacturer">..</attribute>
+			<attribute name="Manufacturer Part">..</attribute>
+			<attribute name="Digi-Key Part">..</attribute>
+			<attribute name="Newark Part">..</attribute>
+			<attribute name="Mouser Part">..</attribute>
+			<attribute name="Cost">..</attribute>
+		</part>
+		<part ref="D1" name="LED">
+			<attribute name="Package"/>
+			<attribute name="Vf">..</attribute>
+			<attribute name="If">..</attribute>
+			<attribute name="Brightness">..</attribute>
+			<attribute name="Color">red</attribute>
+			<attribute name="Manufacturer">..</attribute>
+			<attribute name="Manufacturer Part">..</attribute>
+			<attribute name="Digi-Key Part">..</attribute>
+			<attribute name="Newark Part">..</attribute>
+			<attribute name="Mouser Part">..</attribute>
+			<attribute name="Cost">..</attribute>
+			<attribute name="Other">..</attribute>
+		</part>
+		<part ref="U1" name="New symbol">
+			<attribute name="$$SPICE_PROLOG_PRIORITY">5</attribute>
+			<attribute name="$$SPICE_EPILOG_PRIORITY">5</attribute>
+			<attribute name="Package">package name for PCB layout</attribute>
+		</part>
+		<part ref="U3" name="New Symbol">
+			<attribute name="$$SPICE_PROLOG_PRIORITY">5</attribute>
+			<attribute name="$$SPICE_EPILOG_PRIORITY">5</attribute>
+			<attribute name="Package">package name for PCB layout</attribute>
+		</part>
+		<part ref="U4" name="New symbol">
+			<attribute name="$$SPICE_PROLOG_PRIORITY">5</attribute>
+			<attribute name="$$SPICE_EPILOG_PRIORITY">5</attribute>
+			<attribute name="Package">package name for PCB layout</attribute>
+		</part>
+		<part ref="U2" name="Meanwell SPR01 Series">
+			<attribute name="$$SPICE_PROLOG_PRIORITY">5</attribute>
+			<attribute name="$$SPICE_EPILOG_PRIORITY">5</attribute>
+			<attribute name="Package">SPR01</attribute>
+		</part>
+	</parts>
+	<nets>
+		<net name="GND" number="2">
+			<pin part="U2" name="-In" number="4" type="Input"/>
+			<pin part="U1" name="GND" number="2" type="Input"/>
+			<pin part="R1" name="" number="1" type="Passive"/>
+		</net>
+		<net name="12V" number="1">
+			<pin part="U2" name="+In" number="3" type="Input"/>
+			<pin part="U1" name="12V" number="1" type="Input"/>
+		</net>
+		<net name="_N_3" number="3">
+			<pin part="D1" name="" number="1" type="Passive"/>
+			<pin part="U3" name="G25" number="28" type="Input/Output"/>
+		</net>
+		<net name="_N_4" number="4">
+			<pin part="D1" name="" number="2" type="Passive"/>
+			<pin part="R1" name="" number="2" type="Passive"/>
+		</net>
+		<net name="_N_5" number="8">
+			<pin part="U3" name="G22" number="3" type="Input/Output"/>
+		</net>
+		<net name="_N_6" number="9">
+			<pin part="U3" name="TXD" number="4" type="Input/Output"/>
+		</net>
+		<net name="_N_7" number="10">
+			<pin part="U3" name="RXD" number="5" type="Input/Output"/>
+		</net>
+		<net name="_N_8" number="11">
+			<pin part="U3" name="G21" number="6" type="Input/Output"/>
+		</net>
+		<net name="_N_9" number="12">
+			<pin part="U3" name="GND" number="7" type="Input/Output"/>
+		</net>
+		<net name="_N_10" number="13">
+			<pin part="U3" name="G19" number="8" type="Input/Output"/>
+		</net>
+		<net name="_N_11" number="14">
+			<pin part="U3" name="G18" number="9" type="Input/Output"/>
+		</net>
+		<net name="_N_12" number="15">
+			<pin part="U3" name="G5" number="10" type="Input/Output"/>
+		</net>
+		<net name="_N_13" number="16">
+			<pin part="U3" name="G17" number="11" type="Input/Output"/>
+		</net>
+		<net name="_N_14" number="17">
+			<pin part="U3" name="G16" number="12" type="Input/Output"/>
+		</net>
+		<net name="_N_15" number="18">
+			<pin part="U3" name="G4" number="13" type="Input/Output"/>
+		</net>
+		<net name="_N_16" number="19">
+			<pin part="U3" name="G0" number="14" type="Input/Output"/>
+		</net>
+		<net name="_N_17" number="20">
+			<pin part="U3" name="G2" number="15" type="Input/Output"/>
+		</net>
+		<net name="_N_18" number="21">
+			<pin part="U3" name="G15" number="16" type="Input/Output"/>
+		</net>
+		<net name="_N_19" number="22">
+			<pin part="U3" name="SD1" number="17" type="Input/Output"/>
+		</net>
+		<net name="_N_20" number="23">
+			<pin part="U3" name="SD0" number="18" type="Input/Output"/>
+		</net>
+		<net name="_N_21" number="24">
+			<pin part="U3" name="CLK" number="19" type="Input/Output"/>
+		</net>
+		<net name="_N_22" number="26">
+			<pin part="U3" name="EN" number="21" type="Input/Output"/>
+		</net>
+		<net name="_N_23" number="27">
+			<pin part="U3" name="SP" number="22" type="Input/Output"/>
+		</net>
+		<net name="_N_24" number="28">
+			<pin part="U3" name="SN" number="23" type="Input/Output"/>
+		</net>
+		<net name="_N_25" number="29">
+			<pin part="U3" name="G34" number="24" type="Input/Output"/>
+		</net>
+		<net name="_N_26" number="30">
+			<pin part="U3" name="G35" number="25" type="Input/Output"/>
+			<pin part="U1" name="tacho" number="3" type="Input"/>
+		</net>
+		<net name="_N_27" number="31">
+			<pin part="U3" name="G32" number="26" type="Input/Output"/>
+		</net>
+		<net name="_N_28" number="32">
+			<pin part="U3" name="G33" number="27" type="Input/Output"/>
+		</net>
+		<net name="_N_29" number="33">
+			<pin part="U3" name="G26" number="29" type="Input/Output"/>
+		</net>
+		<net name="_N_30" number="34">
+			<pin part="U3" name="G27" number="30" type="Input/Output"/>
+		</net>
+		<net name="_N_31" number="35">
+			<pin part="U3" name="G14" number="31" type="Input/Output"/>
+		</net>
+		<net name="_N_32" number="36">
+			<pin part="U3" name="G12" number="" type="Input/Output"/>
+			<pin part="U1" name="PWM" number="4" type="Input"/>
+		</net>
+		<net name="_N_33" number="37">
+			<pin part="U3" name="G13" number="34" type="Input/Output"/>
+		</net>
+		<net name="_N_34" number="38">
+			<pin part="U3" name="SD2" number="35" type="Input/Output"/>
+		</net>
+		<net name="_N_35" number="39">
+			<pin part="U3" name="SD3" number="36" type="Input/Output"/>
+		</net>
+		<net name="_N_36" number="40">
+			<pin part="U3" name="CMD" number="37" type="Input/Output"/>
+		</net>
+		<net name="_N_37" number="25">
+			<pin part="U4" name="PWR" number="1" type="Input"/>
+			<pin part="U3" name="3.3V" number="20" type="Passive"/>
+		</net>
+		<net name="_N_38" number="6">
+			<pin part="U4" name="GND" number="2" type="Input"/>
+			<pin part="U3" name="GND" number="1" type="Input/Output"/>
+		</net>
+		<net name="_N_39" number="7">
+			<pin part="U4" name="signal" number="3" type="Input"/>
+			<pin part="U3" name="G23" number="2" type="Input/Output"/>
+		</net>
+		<net name="_N_40" number="42">
+			<pin part="U2" name="-Out" number="1" type="Input"/>
+			<pin part="U3" name="GND" number="33" type="Passive"/>
+		</net>
+		<net name="_N_41" number="5">
+			<pin part="U2" name="+Out" number="2" type="Input"/>
+			<pin part="U3" name="5V" number="38" type="Passive"/>
+		</net>
+	</nets>
+</netlist>
+

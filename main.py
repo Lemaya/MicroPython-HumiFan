@@ -16,12 +16,12 @@ def print_stuff():
     # Zeige alle interessanten Werte an      
     print("Local time：%s" %str(lokalzeit()))
     print("Counter " + str(counter))
-    print("Temperature: " + str(temp) + "°C")
-    print("Humidity: " + str(humidity) + "%")
-    print("DewPoint: " + str(dew_point_temp) + "°C")
+    print("Temperature: " + str(temp) + " °C")
+    print("Humidity: " + str(humidity) + " %")
+    print("DewPoint: " + str(dew_point_temp) + " °C")
     print("PWM duty: " + str(fan_pwm.duty_u16()))
     print("PWM: " + str(pwm_perc) + "%")
-    print("Speicherverbrauch:", gc.mem_alloc() / 1024, "KiB")
+    print("Speicherverbrauch:", gc.mem_alloc() / 1024, " KiB")
     print("StatusLED " + str(status.value()))
     print("Network connection " +str(wlan.isconnected()))
     
@@ -96,12 +96,12 @@ def read_dht (pin,last_t,last_h):
 wlan = network.WLAN(network.STA_IF)
 
 # Initialisiere PWM-Pin
-fan_pin = Pin(25)
+fan_pin = Pin(12)
 fan_pwm = PWM(fan_pin, freq=25000, duty_u16=512)
 fan_pwm.duty_u16(500)
 
 # Init Status Led
-status = Pin(14, Pin.OUT)
+status = Pin(STATUS_LED, Pin.OUT)
 status.on()
 
 counter = 0
