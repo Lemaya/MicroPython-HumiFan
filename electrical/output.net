@@ -1,0 +1,56 @@
+[
+D0
+LED
+LED
+
+
+
+]
+[
+J2
+SIP4
+Fan PWM
+
+
+
+]
+[
+J0
+SIP2
+Input 12V
+
+
+
+]
+[
+J3
+SIP3
+Conn DHT 22
+
+
+
+]
+[
+R0
+AX3_1
+R
+
+
+
+]
+[
+J1
+SIP2
+DC-DC out
+
+
+
+]
+[
+U0
+DIP40
+PIC16F874A, PIC16F877A
+
+
+
+]

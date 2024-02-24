@@ -459,7 +459,7 @@ download the executable.-->
 			<COLOR_NOTETEXT_TEXT>FF0000</COLOR_NOTETEXT_TEXT>
 		</OPTIONS>
 		<SYMBOL id='1' pos='158.00000,194.00000' part='0' rotate='0' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
-			<FIELD type='1' description='Ref' value='R1' show='0' pos='1.00000,-9.60000'/>
+			<FIELD type='1' description='Ref' value='R0' show='0' pos='1.00000,-9.60000'/>
 			<FIELD type='0' description='Name' value='R' show='1' pos='1.00000,-12.00000'/>
 			<FIELD type='1' description='Package' value='' show='0' pos='1.00000,-7.20000'/>
 			<FIELD type='1' description='Value' value='..' show='0' pos='1.00000,-4.80000'/>
@@ -478,7 +478,7 @@ download the executable.-->
 		<POWER pos='18.00000,200.00000' which='1' direction='2'>GND</POWER>
 		<WIRE a='156.00000,165.00000' b='156.00000,180.00000'/>
 		<SYMBOL id='9' pos='290.00000,78.00000' part='0' rotate='2' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
-			<FIELD type='0' description='Ref' value='U1' show='1' pos='-68.00000,2.00000'/>
+			<FIELD type='0' description='Ref' value='U0' show='1' pos='-68.00000,2.00000'/>
 			<FIELD type='0' description='Name' value='PWM Fan' show='1' pos='-68.00000,-70.00000'/>
 			<FIELD type='2' description='$$SPICE_PROLOG_PRIORITY' value='5' show='0' pos='0.00000,0.00000'/>
 			<FIELD type='2' description='$$SPICE_EPILOG_PRIORITY' value='5' show='0' pos='0.00000,0.00000'/>
@@ -492,7 +492,7 @@ download the executable.-->
 		<WIRE a='224.00000,78.00000' b='190.00000,78.00000'/>
 		<WIRE a='190.00000,78.00000' b='190.00000,22.00000'/>
 		<SYMBOL id='15' pos='130.00000,178.00000' part='0' rotate='5' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
-			<FIELD type='0' description='Ref' value='U3' show='1' pos='1.00000,-117.60000'/>
+			<FIELD type='0' description='Ref' value='U2' show='1' pos='1.00000,-117.60000'/>
 			<FIELD type='0' description='Name' value='ESP32' show='1' pos='1.00000,-120.00000'/>
 			<FIELD type='1' description='Package' value='package name for PCB layout' show='0' pos='0.00000,0.00000'/>
 			<FIELD type='2' description='$$SPICE_PROLOG_PRIORITY' value='5' show='0' pos='0.00000,0.00000'/>
@@ -546,7 +546,7 @@ download the executable.-->
 		<WIRE a='130.00000,144.00000' b='232.00000,144.00000'/>
 		<WIRE a='232.00000,144.00000' b='232.00000,78.00000'/>
 		<SYMBOL id='11' pos='32.00000,168.00000' part='0' rotate='0' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
-			<FIELD type='0' description='Ref' value='U4' show='1' pos='1.00000,-35.60000'/>
+			<FIELD type='0' description='Ref' value='U3' show='1' pos='1.00000,-35.60000'/>
 			<FIELD type='0' description='Name' value='DHT 22' show='1' pos='1.00000,-38.00000'/>
 			<FIELD type='2' description='$$SPICE_PROLOG_PRIORITY' value='5' show='0' pos='0.00000,0.00000'/>
 			<FIELD type='2' description='$$SPICE_EPILOG_PRIORITY' value='5' show='0' pos='0.00000,0.00000'/>
@@ -564,7 +564,7 @@ download the executable.-->
 		<WIRE a='130.00000,102.00000' b='236.00000,102.00000'/>
 		<WIRE a='236.00000,102.00000' b='236.00000,78.00000'/>
 		<SYMBOL id='12' pos='50.00000,64.00000' part='0' rotate='0' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
-			<FIELD type='0' description='Ref' value='U2' show='1' pos='1.00000,-7.60000'/>
+			<FIELD type='0' description='Ref' value='U1' show='1' pos='1.00000,-7.60000'/>
 			<FIELD type='0' description='Name' value='Meanwell SPR01 Series' show='1' pos='1.00000,-10.00000'/>
 			<FIELD type='2' description='$$SPICE_PROLOG_PRIORITY' value='5' show='0' pos='0.00000,0.00000'/>
 			<FIELD type='2' description='$$SPICE_EPILOG_PRIORITY' value='5' show='0' pos='0.00000,0.00000'/>
@@ -595,11 +595,13 @@ download the executable.-->
 		<WIRE a='33.00000,200.00000' b='156.00000,200.00000'/>
 		<WIRE a='228.00000,200.00000' b='228.00000,78.00000'/>
 		<SYMBOL id='16' pos='160.00000,168.00000' part='0' rotate='0' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
-			<FIELD type='0' description='Ref' value='D?' show='1' pos='1.00000,-9.60000'/>
+			<FIELD type='0' description='Ref' value='D0' show='1' pos='1.00000,-9.60000'/>
 			<FIELD type='0' description='Name' value='LED' show='1' pos='1.00000,-12.00000'/>
 			<FIELD type='2' description='$$SPICE_PROLOG_PRIORITY' value='5' show='0' pos='0.00000,0.00000'/>
 			<FIELD type='2' description='$$SPICE_EPILOG_PRIORITY' value='5' show='0' pos='0.00000,0.00000'/>
 			<FIELD type='1' description='Package' value='LED' show='0' pos='1.00000,-7.20000'/>
+			<HINT pin='1' net='3'/>
+			<HINT pin='2' net='4'/>
 		</SYMBOL>
 		<JUNCTION pos='156.00000,154.00000'/>
 		<JUNCTION pos='156.00000,168.00000'/>
