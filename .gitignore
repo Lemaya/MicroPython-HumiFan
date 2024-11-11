@@ -7,3 +7,5 @@
 .vscode/*
 build/*
 wokwi.toml
+*.robust2
+micropython-umqtt.robust2

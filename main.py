@@ -3,6 +3,7 @@ import gc
 import machine
 import network
 import time
+import asyncio
 from math import log
 
 from machine import Pin, PWM
@@ -10,6 +11,27 @@ from machine import Pin, PWM
 from config import *
 from network_script import do_connect
 from update_time import update_time_ntp, lokalzeit
+try:
+  import usocket as socket
+except:
+  import socket
+
+# Init Network variablen
+wlan = network.WLAN(network.STA_IF)
+
+# Initialisiere PWM-Pin
+fan_pin = Pin(12)
+fan_pwm = PWM(fan_pin, freq=25000, duty_u16=512)
+fan_pwm.duty_u16(500)
+
+# Init Status Led
+status = Pin(STATUS_LED, Pin.OUT)
+status.on()
+
+
+counter = 0
+last_temp = 20
+last_hum = 60
 
 
 def print_stuff():
@@ -24,6 +46,7 @@ def print_stuff():
     print("Speicherverbrauch:", gc.mem_alloc() / 1024, " KiB")
     print("StatusLED " + str(status.value()))
     print("Network connection " +str(wlan.isconnected()))
+    print('network config:', wlan.ifconfig())
     
     print()
     
@@ -36,7 +59,6 @@ def toggle_esp32(pin_out):
         pin_out.off()
     else:
         pin_out.on()
-    
     
     return
 
@@ -83,72 +105,131 @@ def read_dht (pin,last_t,last_h):
         # print("Humidity: " + str(pin) + " " + str(humidity_read) + "°C")    
                                    
     except OSError as e:
-            print("DHT Error")
+            print("DHT Error internal")
             
     
     return temp_read, humidity_read
-
-      
-
-# Hier beginnt die Main Loop
-
-# Init Network variablen
-wlan = network.WLAN(network.STA_IF)
-
-# Initialisiere PWM-Pin
-fan_pin = Pin(12)
-fan_pwm = PWM(fan_pin, freq=25000, duty_u16=512)
-fan_pwm.duty_u16(500)
-
-# Init Status Led
-status = Pin(STATUS_LED, Pin.OUT)
-status.on()
-
-counter = 0
-last_temp = 20
-last_hum = 60
-
-do_connect()
-
-update_time_ntp()
-
-while True:
-    time.sleep(1)
+  
+def web_page_py():
     
-    toggle_esp32(status)
-      
-    try: 
-        
-        temp, humidity = read_dht(23, last_temp, last_hum)
-        last_temp = temp
-        last_hum = humidity
-                   
-        dew_point_temp = dew_point(temp, humidity)
+    html = """
+      <html>
+    <head> 
+        <title>ESP Web Server</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,"> <style>html{font-family: Helvetica; display:inline-block; margin: 0px auto; text-align: center;}
+  h1{color: #0F3376; padding: 2vh;}p{font-size: 1.5rem;}.button{display: inline-block; background-color: #e7bd3b; border: none; 
+  border-radius: 4px; color: white; padding: 16px 40px; text-decoration: none; font-size: 30px; margin: 2px; cursor: pointer;}
+  .button2{background-color: #4286f4;}</style></head>
+  
+  <body>
+    <h1>ESP Web Server</h1> 
+  
+  <p>Local time: <strong>""" + str(lokalzeit()) + """</strong>  </p>
+  <p>Counter: <strong>""" + str(counter) + """</strong></p>
+  <p>Temperature:  <strong>""" + str(temp) + """</strong>  C</p>
+  <p>Humidity: <strong>""" + str(humidity) + """</strong> %</p>
+  <p>DewPoint: <strong>""" + str(dew_point_temp) + """</strong> C</p>
+  <p>PWM duty: <strong>""" + str(fan_pwm.duty_u16()) +  """</strong></p>
+  <p>PWM: <strong>""" + str(pwm_perc) + """</strong> %</p>
+  <p>Speicherverbrauch:""" + str(gc.mem_alloc() / 1024) + """ KiB"</p>
+  <p><a href="/?led=on"><button class="button">reload</button></a>
+    </p>
+  <p><a href="/?led=off"><button class="button button2">OFF</button></a>
+    </p>
+    </body>
+  </html>"""
 
-        
-        # Regle Lüftergeschwindigkeit basierend auf Feuchtigkeitswert
+    return html
+  
+
+async def pwm_function(last_temp, last_hum):
+    global state
+
+    #try:
+    temp, humidity = read_dht(23, last_temp, last_hum)
+    last_temp = temp
+    last_hum = humidity
                    
-        fan_pwm.duty_u16(duty_pwm(humidity))
+    dew_point_temp = dew_point(temp, humidity)
+
+    # Regle Lüftergeschwindigkeit basierend auf Feuchtigkeitswert
+                   
+    fan_pwm.duty_u16(duty_pwm(humidity))
     
         #Berechne pwm als Prozentwert
-        pwm_perc = 100 * (fan_pwm.duty_u16() / 65356)
-          
-    except Exception:
-            print("DHT Error")
-                        
-    if not wlan.isconnected():
-        do_connect()
-    
-    #Print
+    pwm_perc = 100 * (fan_pwm.duty_u16() / 65356)
+
+        #Print
     print_stuff()
     
-    # Garbage Collection
+        # Garbage Collection
     if gc.mem_alloc() > 1000000:
         gc.collect()
         
     counter = counter + 1
 
+    await asyncio.sleep(1)
+
+    toggle_esp32(status)
+          
+    #except Exception:
+        #print("DHT Error")
+
+    return last_hum, last_hum, fan_pwm, pwm_perc, counter, dew_point
+
+async def live_webserver():
+        global state
+        conn, addr = s.accept()
+        print('Got a connection from %s' % str(addr))
+        request = conn.recv(1024)
+        request = str(request)
+        print('Content = %s' % request)
+        response = web_page_py()
+        conn.send('HTTP/1.1 200 OK\n')
+        conn.send('Content-Type: text/html\n')
+        conn.send('Connection: close\n\n')
+        conn.sendall(response)
+        conn.close()
+        await asyncio.sleep(0.5)
+        return 
+
+# Hier beginnt die Main Loop
 
 
+do_connect()
+
+update_time_ntp()
+
+#start listening to html request
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+s.bind(('', 80))
+s.listen(5)
+
+async def main():
+
+    asyncio.create_task(pwm_function(last_temp, last_hum))
+    asyncio.create_task(live_webserver())
+
+    if not wlan.isconnected():
+        do_connect()
+    return
+
+# Create an Event Loop
+loop = asyncio.get_event_loop()
+# Create a task to run the main function
+loop.create_task(main())
+
+try:
+    # Run the event loop indefinitely
+    loop.run_forever()
+except Exception as e:
+    print('Error occured: ', e)
+except KeyboardInterrupt:
+    print('Program Interrupted by the user')
+
+
+    
 
 
