@@ -1,4 +1,4 @@
-from secrets import *
+from secrets_wifi import *
 
 # Network Variablen aus Secrets
 SSID = secret_SSID
@@ -21,3 +21,6 @@ PWM_OUTPUT = 25
 
 STATUS_LED = 14
 
+# Pin Input
+
+dht_pin = 23

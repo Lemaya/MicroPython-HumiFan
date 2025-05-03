@@ -9,3 +9,4 @@ build/*
 wokwi.toml
 *.robust2
 micropython-umqtt.robust2
+secrets_wifi.py
